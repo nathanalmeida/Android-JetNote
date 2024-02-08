@@ -8,13 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nathan.jetnote.screen.NotesViewModel
 import com.nathan.jetnote.screen.NotesScreen
 import com.nathan.jetnote.ui.theme.JetNoteTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+//                    val notesViewModel = viewModel<NotesViewModel>() //also works
                     val notesViewModel: NotesViewModel by viewModels()
                     NotesApp(notesViewModel)
 
@@ -36,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NotesApp(notesViewModel: NotesViewModel) {
-    val notesList = notesViewModel.getNotes()
+    val notesList = notesViewModel.notesList.collectAsState().value
     NotesScreen(notes = notesList,
         onAddNote = notesViewModel::addNote,
         onRemoveNote = notesViewModel::removeNote

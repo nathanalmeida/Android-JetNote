@@ -37,6 +37,7 @@ import com.nathan.jetnote.components.NoteButton
 import com.nathan.jetnote.components.NoteInputText
 import com.nathan.jetnote.data.NotesDataSource
 import com.nathan.jetnote.model.Note
+import com.nathan.jetnote.util.formatDate
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -132,7 +133,7 @@ fun NotesRow(
             horizontalAlignment = Alignment.Start) {
             Text(text = note.title, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
             Text(text = note.description, style = MaterialTheme.typography.bodyMedium)
-            Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+            Text(text = formatDate(note.entryDate),
                 style = MaterialTheme.typography.labelSmall)
         }
     }
